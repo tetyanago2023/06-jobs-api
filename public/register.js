@@ -26,11 +26,53 @@ export const handleRegister = () => {
     const registerButton = document.getElementById("register-button");
     const registerCancel = document.getElementById("register-cancel");
 
-    registerDiv.addEventListener("click", (e) => {
+    registerDiv.addEventListener("click", async (e) => {
         if (inputEnabled && e.target.nodeName === "BUTTON") {
             if (e.target === registerButton) {
-                showJobs();
+                if (password1.value !== password2.value) {
+                    message.textContent = "The passwords entered do not match.";
+                } else {
+                    enableInput(false);
+
+                    try {
+                        const response = await fetch("/api/v1/auth/register", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                name: name.value,
+                                email: email1.value,
+                                password: password1.value,
+                            }),
+                        });
+
+                        const data = await response.json();
+                        if (response.status === 201) {
+                            message.textContent = `Registration successful.  Welcome ${data.user.name}`;
+                            setToken(data.token);
+
+                            name.value = "";
+                            email1.value = "";
+                            password1.value = "";
+                            password2.value = "";
+
+                            showJobs();
+                        } else {
+                            message.textContent = data.msg;
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        message.textContent = "A communications error occurred.";
+                    }
+
+                    enableInput(true);
+                }
             } else if (e.target === registerCancel) {
+                name.value = "";
+                email1.value = "";
+                password1.value = "";
+                password2.value = "";
                 showLoginRegister();
             }
         }
