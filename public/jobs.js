@@ -22,7 +22,7 @@ export const handleJobs = () => {
     jobsTable = document.getElementById("jobs-table");
     jobsTableHeader = document.getElementById("jobs-table-header");
 
-    jobsDiv.addEventListener("click", (e) => {
+    jobsDiv.addEventListener("click", async (e) => {
         if (inputEnabled && e.target.nodeName === "BUTTON") {
             if (e.target === addJob) {
                 showAddEdit(null);
@@ -37,9 +37,39 @@ export const handleJobs = () => {
             } else if (e.target.classList.contains("editButton")) {
                 message.textContent = "";
                 showAddEdit(e.target.dataset.id);
+            } else if (e.target.classList.contains("deleteButton")) {
+                const jobId = e.target.dataset.id;
+                await deleteJob(jobId);
             }
         }
     });
+};
+
+const deleteJob = async (jobId) => {
+    try {
+        enableInput(false);
+
+        const response = await fetch(`/api/v1/jobs/${jobId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+            message.textContent = "Job was deleted successfully!";
+            showJobs(); // Refresh the jobs list
+        } else {
+            message.textContent = data.msg || "Failed to delete job.";
+        }
+    } catch (err) {
+        console.log(err);
+        message.textContent = "A communication error occurred.";
+    }
+    enableInput(true);
 };
 
 export const showJobs = async () => {
@@ -70,7 +100,7 @@ export const showJobs = async () => {
             <td>${data.jobs[i].company}</td>
             <td>${data.jobs[i].position}</td>
             <td>${data.jobs[i].status}</td>
-            <div>${editButton}${deleteButton}</div>`;
+            <td>${editButton}${deleteButton}</td>`;
 
                     rowEntry.innerHTML = rowHTML;
                     children.push(rowEntry);
