@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: 06-Jobs-API-Production
+  version: 1.0.0
+servers:
+  - url: https://jobs-api-tetyana.onrender.com/api/v1
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+paths:
+  /jobs/{id}}:
+    delete:
+      tags:
+        - default
+      summary: Production Delete Job
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /jobs/{id}:
+    patch:
+      tags:
+        - default
+      summary: Production Update Job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                company: amazon_peter_production
+                position: manager_peter_production
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - default
+      summary: Production Get Single Job by User
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /jobs:
+    post:
+      tags:
+        - default
+      summary: Production Create Jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                company: amazon_peter_production
+                position: front-end-dev_peter_production
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - default
+      summary: Production All Jobs by User
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/register:
+    post:
+      tags:
+        - default
+      summary: Production Register User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: peter_production
+                email: peter_production@example.com
+                password: secret
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/login:
+    post:
+      tags:
+        - default
+      summary: Production Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: peter@example.com
+                password: secret
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
