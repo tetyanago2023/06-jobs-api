@@ -54,6 +54,7 @@ app.use(xss());
 
 app.use(express.static("public"));
 
+
 // routes
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', authenticateUser, jobsRouter);
