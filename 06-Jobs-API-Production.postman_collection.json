@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "218b8fa1-af16-4c7a-ad3a-0bc01b126621",
+		"name": "06-Jobs-API-Production",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39296796"
+	},
+	"item": [
+		{
+			"name": "Production Delete Job",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{PROD_URL}}/jobs/675fba1480eb5e004ea89e83",
+					"host": [
+						"{{PROD_URL}}"
+					],
+					"path": [
+						"jobs",
+						"675fba1480eb5e004ea89e83"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Production Update Job",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"company\":\"amazon_peter_production\",\"position\":\"manager_peter_production\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROD_URL}}/jobs/675c7be51488493cf9502153",
+					"host": [
+						"{{PROD_URL}}"
+					],
+					"path": [
+						"jobs",
+						"675c7be51488493cf9502153"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Production Get Single Job by User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{PROD_URL}}/jobs/675c7be51488493cf9502153",
+					"host": [
+						"{{PROD_URL}}"
+					],
+					"path": [
+						"jobs",
+						"675c7be51488493cf9502153"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Production Create Jobs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"company\":\"amazon_peter_production\",\"position\":\"front-end-dev_peter_production\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROD_URL}}/jobs",
+					"host": [
+						"{{PROD_URL}}"
+					],
+					"path": [
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Production Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"peter_production\",\"email\":\"peter_production@example.com\",\"password\":\"secret\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROD_URL}}/auth/register",
+					"host": [
+						"{{PROD_URL}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Production Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"pm.globals.set(\"accessToken\", jsonData.token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"peter@example.com\",\"password\":\"secret\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROD_URL}}/auth/login",
+					"host": [
+						"{{PROD_URL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Production All Jobs by User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{PROD_URL}}/jobs",
+					"host": [
+						"{{PROD_URL}}"
+					],
+					"path": [
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
